@@ -1,74 +1,81 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
 body{
-    background-color: #c9c9c9;
+    background-color: var(--colorBackground);
 }
 
 #foto_perfil{
-    width: 100px;
-    border-radius: 15px;
+    width: 90px;
+    border-radius: var(--radiusLarge)
 }
 
 header{
-    background-color: #5F2EEA   ;
+    background-color: var(--colorPrimary);
     width: 100%;
     padding-top: 50px;
     height: 25dvh;
-    display: flex;
-    align-items: start;
-    justify-content: space-around;
 }
 
-
 #header,
+#table,
 .transacao{
     display: flex;
     width: 70%;
     justify-content: space-between;
     align-items: center;
-
+    margin: 0 auto;
 }
 
 #informacoes-usuario{
     display: flex;
-    align-items: center;
+}
+
+#info-perfil{
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
 }
 
 #informacoes-usuario span{
     display: block;
     margin-left: 15px;
     color: #fff;
+    font-size: var(--fontSizeMedium);
 }
 
 .btn-transacao{
     align-items: center;
-    border-radius: 8px;
+    border-radius: var(--radiusMedium);
     padding: 10px;
     background-color: blue;
     color: white;
     text-decoration: none;
+    font-weight: 700;
  
 }
 
 .transacao{
    gap: 15px;
-   margin: 0 auto;
    margin-top: -90px;
   
 }
 
 .card{
     width: 30%;
-    border-radius: 10px;
-    padding: 30px;
+    border-radius: var(--radiusLarge);
+    padding: var(--spacing-xlarge);
     background-color: #fff;
 }
 
-
-
+.card-total{
+    background-color: var(--colorSecondary);
+    color: var(--colorShape);
+}
 
 .parte-superior{
     display: flex;
@@ -77,22 +84,24 @@ header{
    
 }
 
-.parte-superior p{
-    font-size: 20px;
+.card-titulo{
+    font-size: var(--fontSizeMedium);
+    font-weight: bold;
 }
+
 
 .icon-arrow-up,
 .icon-arrow-down,
 .icon-dollar{
-    font-size: 30px;
+    font-size: var(--fontSize-xxlarge);
 }
 
 .icon-arrow-up{
-    color: green;
+    color: var(--colorSuccess);
 }
 
 .icon-arrow-down{
-    color: red;
+    color: var(--colorError);
 }
 
 
@@ -102,9 +111,16 @@ header{
 
 .valor-card{
     font-weight: bold;
-    font-size: 35px;
+    font-size: var(--fontSize-xxlarge);
 }
 
 .ultima-transacao{
-    color: #ccc;
+    color: var(--colorTextLight);
 }
+
+#table{
+    border: 1px solid;
+    display: block;
+}
+
+

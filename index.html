@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/tela-inicial.css">
+    <link rel="stylesheet" href="assets/style/global.css">
+    <link rel="stylesheet" href="assets/style/tela-inicial.css">
 </head>
 
 <body>
@@ -14,7 +15,7 @@
         <div id="header">
             <div id="informacoes-usuario">
                 <img id="foto_perfil" src="assets/images/fotodeperfil.PNG" alt="">
-                <div>
+                <div id="info-perfil">
                     <span>Olá,</span>
                     <span><b>Estudante</b></span>
                 </div>
@@ -25,10 +26,10 @@
     </header>
 
     <main>
-        <div class="transacao">
+        <section class="transacao">
             <div class="card">
                 <div class="parte-superior">
-                    <p>Entradas</p>
+                    <p class="card-titulo">Entradas</p>
                     <i class="fa-solid fa-circle-up icon-arrow-up"></i>
                 </div>
                 <div class="parte-inferior">
@@ -39,7 +40,7 @@
 
             <div class="card">
                 <div class="parte-superior">
-                    <p>Saídas</p>
+                    <p class="card-titulo">Saídas</p>
                     <i class="fa-solid fa-circle-down icon-arrow-down"></i>
                 </div>
                 <div class="parte-inferior">
@@ -48,20 +49,53 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card card-total">
                 <div class="parte-superior">
-                    <p>Total</p>
+                    <p class="card-titulo">Total</p>
                     <i class="fa-solid fa-dollar-sign icon-dollar"></i>
                 </div>
                 <div class="parte-inferior">
                     <p class="valor-card">R$ 17.300,00</p>
-                    <p class="ultima-transacao">Última entrada dia 13 de Abril</p>
+                    <p>Última entrada dia 13 de Abril</p>
                 </div>
             </div>
-       
+        </section>
+
+         <table id="table">
+            <thead id="table-head">
+                <tr class="table-column">
+                    <th>Titulo</th>
+                    <th>Preço</th>
+                    <th>Categoria</th>
+                    <th>Total</th> 
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="table-column">
+                    <td>Desenvolvimento de site</td>
+                    <td>R$ 12.000,00</td>
+                    <td>Vendas</td>
+                    <td>13/04/25</td>
+                </tr>
+
+                <tr class="table-column">
+                    <td>Compras</td>
+                    <td>R$ 1.000,00</td>
+                    <td>Compras</td>
+                    <td>13/04/25</td>
+                </tr>
+
+                <tr class="table-column">
+                    <td>Desenvolvimento de site</td>
+                    <td>R$ 12.000,00</td>
+                    <td>Vendas</td>
+                    <td>13/04/25</td>
+                </tr>
+            </tbody>
 
 
-        </div>
+        </table>
 
     </main>
 </body>
