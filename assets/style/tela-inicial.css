@@ -1,19 +1,19 @@
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
 }
 
-body{
+body {
     background-color: var(--colorBackground);
 }
 
-#foto_perfil{
+#foto_perfil {
     width: 90px;
     border-radius: var(--radiusLarge)
 }
 
-header{
+header {
     background-color: var(--colorPrimary);
     width: 100%;
     padding-top: 50px;
@@ -21,8 +21,7 @@ header{
 }
 
 #header,
-#table,
-.transacao{
+.transacao {
     display: flex;
     width: 70%;
     justify-content: space-between;
@@ -30,25 +29,74 @@ header{
     margin: 0 auto;
 }
 
-#informacoes-usuario{
+
+#table {
+
+    width: 70%;
+    margin: 40px auto 0 auto;
+    border-collapse: collapse;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+    background-color: #fff;
+    overflow: hidden;
+    text-align: left;
+}
+
+#table-head {
+    background-color: var(--colorPrimary);
+    color: var(--colorShape);
+}
+
+#table-head th {
+    padding: 16px;
+
+}
+
+#table-body tr {
+    transition: background-color 0.3s ease;
+}
+
+
+.table-column td {
+    padding: 14px 16px;
+    color: var(--colorTextLight);
+    border-bottom: 1px solid #eee;
+}
+
+/* Alternar cor entre linhas */
+#table-body tr:nth-child(even) {
+    background-color: #F0F0F0;
+}
+
+#table-body tr:nth-child(even):hover,
+#table-body tr:nth-child(odd):hover {
+    background-color: #eef2ff;
+}
+
+
+
+
+
+#informacoes-usuario {
     display: flex;
 }
 
-#info-perfil{
-   flex: 1;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-around;
+#info-perfil {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
-#informacoes-usuario span{
+#informacoes-usuario span {
     display: block;
     margin-left: 15px;
     color: #fff;
     font-size: var(--fontSizeMedium);
 }
 
-.btn-transacao{
+.btn-transacao {
     align-items: center;
     border-radius: var(--radiusMedium);
     padding: 10px;
@@ -56,35 +104,35 @@ header{
     color: white;
     text-decoration: none;
     font-weight: 700;
- 
+
 }
 
-.transacao{
-   gap: 15px;
-   margin-top: -90px;
-  
+.transacao {
+    gap: 15px;
+    margin-top: -90px;
+
 }
 
-.card{
+.card {
     width: 30%;
     border-radius: var(--radiusLarge);
     padding: var(--spacing-xlarge);
     background-color: #fff;
 }
 
-.card-total{
+.card-total {
     background-color: var(--colorSecondary);
     color: var(--colorShape);
 }
 
-.parte-superior{
+.parte-superior {
     display: flex;
     justify-content: space-between;
     align-items: center;
-   
+
 }
 
-.card-titulo{
+.card-titulo {
     font-size: var(--fontSizeMedium);
     font-weight: bold;
 }
@@ -92,35 +140,63 @@ header{
 
 .icon-arrow-up,
 .icon-arrow-down,
-.icon-dollar{
+.icon-dollar {
     font-size: var(--fontSize-xxlarge);
 }
 
-.icon-arrow-up{
+.icon-arrow-up {
     color: var(--colorSuccess);
 }
 
-.icon-arrow-down{
+.icon-arrow-down {
     color: var(--colorError);
 }
 
 
-.parte-inferior{
-  margin-top: 40px;
+.parte-inferior {
+    margin-top: 40px;
 }
 
-.valor-card{
+.valor-card {
     font-weight: bold;
     font-size: var(--fontSize-xxlarge);
 }
 
-.ultima-transacao{
+.ultima-transacao {
     color: var(--colorTextLight);
 }
 
-#table{
-    border: 1px solid;
-    display: block;
+
+
+/* .modal {
+    display: none;
+    /* escondido por padrão *
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* fundo escurecido *
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+}
 
+.close-button {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    font-size: 24px;
+    cursor: pointer;
+} */
