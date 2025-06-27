@@ -58,7 +58,7 @@ header {
 }
 
 
-.table-column td {
+.table-row td {
     padding: 14px 16px;
     color: var(--colorTextLight);
     border-bottom: 1px solid #eee;
