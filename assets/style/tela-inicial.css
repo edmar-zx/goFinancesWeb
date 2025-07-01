@@ -2,10 +2,12 @@
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
     background-color: var(--colorBackground);
+    
 }
 
 #foto_perfil {
@@ -21,7 +23,7 @@ header {
 }
 
 #header,
-.transacao {
+#transacao {
     display: flex;
     width: 70%;
     justify-content: space-between;
@@ -29,19 +31,12 @@ header {
     margin: 0 auto;
 }
 
+#transacao {
+    gap: 15px;
+    margin-top: -90px;
 
-#table {
-
-    width: 70%;
-    margin: 40px auto 0 auto;
-    border-collapse: collapse;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-
-    background-color: #fff;
-    overflow: hidden;
-    text-align: left;
 }
+
 
 #table-head {
     background-color: var(--colorPrimary);
@@ -61,6 +56,7 @@ header {
 .table-row td {
     padding: 14px 16px;
     color: var(--colorTextLight);
+    font-weight: 600;
     border-bottom: 1px solid #eee;
 }
 
@@ -74,8 +70,61 @@ header {
     background-color: #eef2ff;
 }
 
+.table-wrapper {
+    width: 70%;
+    margin: 40px auto 0;
+    border-radius: var(--radiusMedium);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
 
+#table-head {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--colorPrimary);
+    color: var(--colorShape);
+    border-top-left-radius: var(--radiusMedium);
+    border-top-right-radius: var(--radiusMedium);
+}
 
+#table-head th {
+    padding: 16px;
+    text-align: left;
+}
+
+.tbody-container {
+    height: 400px;
+    overflow-y: overlay;
+    border-radius: var(--radiusMedium);
+}
+
+#table-body {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Estilização da barra de rolagem APENAS no tbody */
+.tbody-container::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+}
+
+.tbody-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radiusSmall);
+}
+
+/* Mantém o alinhamento das colunas */
+#table-head,
+#table-body {
+    table-layout: fixed;
+}
+
+#table-head th,
+#table-body td {
+    width: 25%;
+    /* Ajuste conforme suas colunas */
+}
 
 
 #informacoes-usuario {
@@ -107,11 +156,7 @@ header {
 
 }
 
-.transacao {
-    gap: 15px;
-    margin-top: -90px;
 
-}
 
 .card {
     width: 30%;
@@ -160,43 +205,16 @@ header {
 .valor-card {
     font-weight: bold;
     font-size: var(--fontSize-xxlarge);
+    margin-bottom: 0.4rem;
+
 }
 
 .ultima-transacao {
     color: var(--colorTextLight);
 }
 
-
-
-/* .modal {
-    display: none;
-    /* escondido por padrão *
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* fundo escurecido *
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.card-total .ultima-transacao {
+    color: var(--colorShape);
 }
 
-.modal-content {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 400px;
-    max-width: 90%;
-    position: relative;
-}
 
-.close-button {
-    position: absolute;
-    right: 16px;
-    top: 12px;
-    font-size: 24px;
-    cursor: pointer;
-} */

@@ -1,59 +1,55 @@
 
-
-
 function getTransactions() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
 
-    fetch('http://localhost:3000/api/v1/transactions')
+    fetch(`http://localhost:3000/api/v1/transactions?year=${year}&month=${month}`)
+        .then(res => res.json())
+        .then(data => {
+            exibirTransacoes(data);
+        })
+        .catch(err => console.error('Erro ao buscar transações:', err.message));
+}
+
+function postTransactions(data) {
+    fetch('http://localhost:3000/api/v1/transactions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(err.error || 'Erro ao salvar transação');
+                });
+            }
+            return response.json();
+        })
+        .then(result => {
+            console.log('Transação salva com sucesso:', result);
+
+        })
+        .catch(error => {
+            console.error('Erro ao salvar transação:', error.message);
+        });
+}
+
+function getMonthlySummary() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // Janeiro = 0 por isso soma 1
+
+    fetch(`http://localhost:3000/api/v1/monthlySummary?year=${year}&month=${month}`)
         .then(T => T.json())
         .then(data => {
-            exibirTransacoes(data)
+            exibirResumoMensal(data);
         })
-        .catch(err => console.log(err.message))
-}
-
-function postTransactions() {
-
-}
-
-
-
-
-function exibirTransacoes(lista) {
-
-    const tbody = document.getElementById('table-body');
-    if (!tbody) return;
-
-    tbody.innerHTML = '';
-    console.log(tbody)
-
-
-
-    lista.forEach(transacao => {
-        const tr = document.createElement('tr');
-        tr.classList.add('table-row');
-
-        const tdTitulo = document.createElement('td');
-        tdTitulo.textContent = transacao.titulo;
-
-        const tdPreco = document.createElement('td');
-        tdPreco.textContent = transacao.valor;
-
-        const tdCategoria = document.createElement('td');
-        tdCategoria.textContent = transacao.categoria;
-
-        const tdData = document.createElement('td');
-        const dataFormatada = new Date(transacao.data).toLocaleDateString('pt-BR');
-        tdData.textContent = dataFormatada;
-
-        tr.appendChild(tdTitulo);
-        tr.appendChild(tdPreco);
-        tr.appendChild(tdCategoria);
-        tr.appendChild(tdData);
-
-        tbody.appendChild(tr);
-    });
+        .catch(error => {
+            console.error('Erro ao buscar resumo mensal:', error);
+        });
 }
 
 
-//exibirTransacoes();
-getTransactions();

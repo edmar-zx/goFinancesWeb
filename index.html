@@ -8,17 +8,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="assets/style/global.css">
     <link rel="stylesheet" href="assets/style/tela-inicial.css">
+    <link rel="stylesheet" href="assets/style/cadastro.css">
 </head>
 
-<!-- <div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2>Nova Transação</h2>
-            <!- conteúdo do formulário aqui ->
-        <p>Formulário de exemplo...</p>
-    </div>
-</div> -->
 
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Nova Transação</h2>
+        <form id="form-transacao">
+            <input type="text" id="titulo" placeholder="Título" autocomplete="off" required>
+            <div class="input-wrapper">
+                <input type="text" id="valorInput" placeholder="R$ 0,00" maxlength="20" autocomplete="off"
+                    inputmode="numeric" required />
+                <button type="button" id="limparValor" class="limpar-btn">&times;</button>
+            </div>
+
+            <div class="tipo-transacao">
+                <button type="button" class="tipo-btn" data-modal-tipo="entrada">
+                    <i class="fa-solid fa-circle-up icon-arrow-up"></i> Entrada
+                </button>
+
+                <button type="button" class="tipo-btn" data-modal-tipo="saida">
+                    <i class="fa-solid fa-circle-down icon-arrow-down"></i> Saída
+                </button>
+            </div>
+
+
+            <div class="categoria-wrapper">
+                <input type="text" id="categoria" placeholder="Categoria" autocomplete="off" required>
+                <ul id="lista-categorias" class="hidden"></ul>
+            </div>
+            <button type="submit" class="btn-submit">Cadastrar</button>
+        </form>
+    </div>
+</div>
 
 <body>
     <header>
@@ -36,60 +60,65 @@
     </header>
 
     <main>
-        <section class="transacao">
-            <div class="card">
+        <section id="transacao">
+            <div class="card" data-tipo="entrada">
                 <div class="parte-superior">
                     <p class="card-titulo">Entradas</p>
                     <i class="fa-solid fa-circle-up icon-arrow-up"></i>
                 </div>
                 <div class="parte-inferior">
-                    <p class="valor-card">R$ 17.300,00</p>
-                    <p class="ultima-transacao">Última entrada dia 13 de Abril</p>
+                    <p class="valor-card"></p>
+                    <p class="ultima-transacao"></p>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" data-tipo="saida">
                 <div class="parte-superior">
                     <p class="card-titulo">Saídas</p>
                     <i class="fa-solid fa-circle-down icon-arrow-down"></i>
                 </div>
                 <div class="parte-inferior">
-                    <p class="valor-card">R$ 17.300,00</p>
-                    <p class="ultima-transacao">Última entrada dia 13 de Abril</p>
+                    <p class="valor-card"></p>
+                    <p class="ultima-transacao"></p>
                 </div>
             </div>
 
-            <div class="card card-total">
+            <div class="card card-total" data-tipo="total">
                 <div class="parte-superior">
                     <p class="card-titulo">Total</p>
                     <i class="fa-solid fa-dollar-sign icon-dollar"></i>
                 </div>
                 <div class="parte-inferior">
-                    <p class="valor-card">R$ 17.300,00</p>
-                    <p>Última entrada dia 13 de Abril</p>
+                    <p class="valor-card"></p>
+                    <p class="ultima-transacao"></p>
                 </div>
             </div>
         </section>
 
-        <table id="table">
-            <thead id="table-head">
-                <tr>
-                    <th>Título</th>
-                    <th>Preço</th>
-                    <th>Categoria</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
+        <div class="table-wrapper">
+            <table id="table-head">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Preço</th>
+                        <th>Categoria</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+            </table>
 
-            <tbody id="table-body">
-    
-            </tbody>
-        </table>
+            <div class="tbody-container">
+                <table id="table-body">
+            </div>
+        </div>
+
+
 
     </main>
 </body>
 
 </html>
 
-<script src="assets/js/tela-inicial.js"></script>
 <script src="assets/js/api.js"></script>
+<script src="assets/js/tela-inicial.js"></script>
+<script src="assets/js/cadastro.js"></script>
