@@ -7,11 +7,26 @@ const tituloInput = document.getElementById('titulo');
 let tipoSelecionado = null;
 
 const categoriasDisponiveis = [
-    'Supermercado', 'Energia', 'Água', 'Transporte', 'Aluguel', 'Internet', 'Telefone', 'Saúde',
-    'Farmácia', 'Educação', 'Assinaturas', 'Lazer', 'Restaurante', 'Roupas', 'Manutenção',
-    'Impostos', 'Doações', 'Pet', 'Viagem', 'Cursos', 'Compras Online', 'Serviços Domésticos',
-    'Cuidados Pessoais', 'Emergências', 'Reserva de Emergência', 'Poupança', 'Cartão de Crédito',
-    'Salário', 'Freelance', 'Rendimentos', 'Investimentos', 'Presentes', 'Reembolsos', 'Outros'
+    'Água',
+    'Alimentação',
+    'Aluguel',
+    'Assinaturas',
+    'Cartão de Crédito',
+    'Compras',
+    'Educação',
+    'Energia',
+    'Internet',
+    'Investimentos',
+    'Lazer',
+    'Receitas',
+    'Restaurante',
+    'Salário',
+    'Saúde',
+    'Serviços',
+    'Supermercado',
+    'Telefone',
+    'Transporte',
+    'Outros'
 ];
 
 const categoriasNormalizadas = categoriasDisponiveis.map(cat => {
@@ -53,12 +68,12 @@ function formatarParaMoeda(valor) {
 
 // Atualiza o campo e move o cursor para o final
 valorInput.addEventListener("input", e => {
-  const input = e.target;
-  input.value = formatarParaMoeda(input.value);
-  limparBtn.style.display = input.value ? "block" : "none";
+    const input = e.target;
+    input.value = formatarParaMoeda(input.value);
+    limparBtn.style.display = input.value ? "block" : "none";
 
-  // Mantém o cursor no final
-  input.selectionStart = input.selectionEnd = input.value.length;
+    // Mantém o cursor no final
+    input.selectionStart = input.selectionEnd = input.value.length;
 });
 
 // Botão "x" para limpar
@@ -156,16 +171,11 @@ form.addEventListener('submit', (e) => {
         return;
     }
 
-    // Data atual em UTC-3 (Brasília)
-    const dataBrasilia = new Date();
-    dataBrasilia.setHours(dataBrasilia.getHours() - 3);
-
     const transacao = {
         titulo,
         valor: valorNumerico,
         tipo: tipoSelecionado,
-        categoria,
-        data: dataBrasilia.toISOString()
+        categoria
     };
 
     postTransactions(transacao);

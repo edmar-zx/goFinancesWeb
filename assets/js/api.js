@@ -1,8 +1,13 @@
+function getCurrentYearMonth() {
+    const now = new Date();
+    return {
+        year: now.getFullYear(),
+        month: now.getMonth() + 1 // Janeiro = 0
+    };
+}
 
 function getTransactions() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
+    const { year, month } = getCurrentYearMonth();
 
     fetch(`http://localhost:3000/api/v1/transactions?year=${year}&month=${month}`)
         .then(res => res.json())
@@ -38,9 +43,7 @@ function postTransactions(data) {
 }
 
 function getMonthlySummary() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1; // Janeiro = 0 por isso soma 1
+    const { year, month } = getCurrentYearMonth();
 
     fetch(`http://localhost:3000/api/v1/monthlySummary?year=${year}&month=${month}`)
         .then(T => T.json())
