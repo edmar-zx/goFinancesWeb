@@ -10,11 +10,7 @@ body {
 
 }
 
-#foto_perfil {
-    width: 90px;
-    border-radius: var(--radiusLarge)
-}
-
+/* --- HEADER COM INFORMAÇÕES DO USUÁRIO --- */
 header {
     background-color: var(--colorPrimary);
     width: 100%;
@@ -22,6 +18,40 @@ header {
     height: 25dvh;
 }
 
+#informacoes-usuario {
+    display: flex;
+}
+
+#foto_perfil {
+    width: 90px;
+    border-radius: var(--radiusLarge)
+}
+
+#info-perfil {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#informacoes-usuario span {
+    display: block;
+    margin-left: var(--spacingMedium);
+    color: var(--colorShape);
+    font-size: var(--fontSizeMedium);
+}
+
+.btn-transacao {
+    text-align: center;
+    border-radius: var(--radiusMedium);
+    padding: 10px;
+    background-color: blue;
+    color: var(--colorShape);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* --- HIGHLIGHTS CARDS --- */
 #header,
 #transacao {
     display: flex;
@@ -34,145 +64,13 @@ header {
 #transacao {
     gap: 15px;
     margin-top: -90px;
-
-
-}
-
-
-#table-head {
-    background-color: var(--colorPrimary);
-    color: var(--colorShape);
-}
-
-#table-head th {
-    padding: 16px;
-
-}
-
-#table-body tr {
-    transition: background-color 0.3s ease;
-}
-
-
-.table-row td {
-    padding: 14px 16px;
-    color: var(--colorTextLight);
-    font-weight: 600;
-    border-bottom: 1px solid #eee;
-
-    word-break: break-word;
-    white-space: normal;
-    text-align: left;
-}
-
-
-
-/* Alternar cor entre linhas */
-#table-body tr:nth-child(even) {
-    background-color: #F0F0F0;
-}
-
-#table-body tr:nth-child(even):hover,
-#table-body tr:nth-child(odd):hover {
-    background-color: #eef2ff;
-}
-
-.table-wrapper {
-    width: 70%;
-    margin: 40px auto 0;
-    border-radius: var(--radiusMedium);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    background: #fff;
-}
-
-#table-head {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--colorPrimary);
-    color: var(--colorShape);
-    border-top-left-radius: var(--radiusMedium);
-    border-top-right-radius: var(--radiusMedium);
-}
-
-#table-head th {
-    padding: 16px;
-    text-align: left;
-}
-
-.tbody-container {
-    height: 400px;
-    overflow-y: overlay;
-    border-radius: var(--radiusMedium);
-}
-
-#table-body {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-/* Estilização da barra de rolagem APENAS no tbody */
-.tbody-container::-webkit-scrollbar {
-    width: 10px;
-    background: transparent;
-}
-
-.tbody-container::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: var(--radiusSmall);
-}
-
-/* Mantém o alinhamento das colunas */
-#table-head,
-#table-body {
-    table-layout: fixed;
-}
-
-#table-head th,
-#table-body td {
-    width: 25%;
-    /* Ajuste conforme suas colunas */
-}
-
-
-#informacoes-usuario {
-    display: flex;
-}
-
-#info-perfil {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-#informacoes-usuario span {
-    display: block;
-    margin-left: 15px;
-    color: #fff;
-    font-size: var(--fontSizeMedium);
-}
-
-.btn-transacao {
-    text-align: center;
-    border-radius: var(--radiusMedium);
-    padding: 10px;
-    background-color: blue;
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-
 }
 
 .card {
     width: 30%;
     border-radius: var(--radiusLarge);
     padding: var(--spacing-xlarge);
-    background-color: #fff;
-}
-
-.card-total {
-    background-color: var(--colorSecondary);
-    color: var(--colorShape);
+    background-color: var(--colorShape);
 }
 
 .parte-superior {
@@ -186,7 +84,6 @@ header {
     font-size: var(--fontSizeMedium);
     font-weight: bold;
 }
-
 
 .icon-arrow-up,
 .icon-arrow-down,
@@ -202,7 +99,6 @@ header {
     color: var(--colorError);
 }
 
-
 .parte-inferior {
     margin-top: 40px;
 }
@@ -211,15 +107,101 @@ header {
     font-weight: bold;
     font-size: var(--fontSize-xxlarge);
     margin-bottom: 0.4rem;
-
 }
 
 .ultima-transacao {
     color: var(--colorTextLight);
 }
 
+.card-total {
+    background-color: var(--colorSecondary);
+    color: var(--colorShape);
+}
+
 .card-total .ultima-transacao {
     color: var(--colorShape);
+}
+
+/* --- TABELA --- */
+.table-wrapper {
+    width: 70%;
+    margin: 40px auto 0;
+    border-radius: var(--radiusMedium);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    background: var(--colorShape);
+}
+
+#table-head {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--colorPrimary);
+    color: var(--colorShape);
+    border-top-left-radius: var(--radiusMedium);
+    border-top-right-radius: var(--radiusMedium);
+}
+
+
+
+#table-head th {
+    padding: var(--spacingMedium);
+    text-align: left;
+}
+
+.tbody-container {
+    height: 400px;
+    overflow-y: overlay;
+    border-radius: var(--radiusMedium);
+}
+
+/* Estilização da barra de rolagem APENAS no tbody */
+.tbody-container::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+}
+
+.tbody-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radiusSmall);
+}
+
+#table-body {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#table-body tr {
+    transition: background-color 0.3s ease;
+}
+
+#table-body tr:nth-child(even) {
+    background-color: var(--colorBackground);
+}
+
+#table-body tr:nth-child(even):hover,
+#table-body tr:nth-child(odd):hover {
+    background-color: #eef2ff;
+}
+
+/* Mantém o alinhamento das colunas */
+#table-head,
+#table-body {
+    table-layout: fixed;
+}
+
+#table-head th,
+#table-body td {
+    width: 15%;
+}
+
+.table-row td {
+    padding: 14px 16px;
+    color: var(--colorTextLight);
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+
+    word-break: break-word;
+    white-space: normal;
+    text-align: left;
 }
 
 @media (max-width: 1600px) {
@@ -231,13 +213,14 @@ header {
         min-width: 280px;
         margin-bottom: 20px;
     }
+
     .ultima-transacao,
     .card-total .ultima-transacao {
-        font-size: 0.9rem;
+        font-size: var(--fontSizeSmall)
     }
 
     .valor-card {
-        font-size: 1.2rem;
+       font-size: var(--fontSizeLarge)
     }
 }
 
@@ -246,6 +229,7 @@ header {
     #transacao {
         flex-wrap: wrap;
     }
+
     .valor-card {
         font-size: var(--fontSize-xxlarge);
     }
@@ -256,14 +240,13 @@ header {
     }
 
     .table-row td {
-        font-size: 0.8rem;
+       font-size: var(--fontSizeSmall)
     }
-
 }
 
 @media (max-width: 600px) {
-    .btn-transacao{
+    .btn-transacao {
         width: 100px;
-        font-size: 0.8rem;
+        font-size: var(--fontSizeSmall)
     }
 }

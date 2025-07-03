@@ -21,13 +21,11 @@
     border-radius: 10px;
     width: 400px;
     position: relative;
-    
 }
 
 .modal-content h2 {
     margin-top: 0;
 }
-
 
 .modal-content input {
     width: 100%;
@@ -60,7 +58,6 @@
 
 }
 
-
 .tipo-btn i {
     font-size: 1rem;
     /* ícone do mesmo tamanho da fonte */
@@ -72,14 +69,10 @@
 
 .tipo-btn[data-modal-tipo="entrada"] {
     background-color: #a8e6cf;
-    /* Verde claro */
-
 }
 
 .tipo-btn[data-modal-tipo="saida"] {
     background-color: #ffcccb;
-    /* Vermelho claro */
-
 }
 
 .tipo-btn.active-entrada {
@@ -113,11 +106,9 @@
     color: #f5f5f5;
 }
 
-
 .input-wrapper {
     position: relative;
 }
-
 
 .limpar-btn {
     position: absolute;
@@ -130,7 +121,6 @@
     cursor: pointer;
     display: none;
 }
-
 
 .categoria-wrapper {
     position: relative;
@@ -202,4 +192,36 @@
 
 .close:hover {
     color: #e74c3c;
+}
+
+.notificacao {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #323232;
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+  max-width: 300px;
+}
+
+.notificacao.show {
+  opacity: 1;
+}
+
+.notificacao.error {
+  background-color: #e74c3c;
+}
+
+.notificacao.success {
+  background-color: #27ae60;
+}
+
+.hidden {
+  display: none;
 }

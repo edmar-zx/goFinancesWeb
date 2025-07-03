@@ -16,30 +16,22 @@ function getTransactions() {
         })
         .catch(err => console.error('Erro ao buscar transações:', err.message));
 }
-
 function postTransactions(data) {
-    fetch('http://localhost:3000/api/v1/transactions', {
+    return fetch('http://localhost:3000/api/v1/transactions', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => {
-                    throw new Error(err.error || 'Erro ao salvar transação');
-                });
-            }
-            return response.json();
-        })
-        .then(result => {
-            console.log('Transação salva com sucesso:', result);
-
-        })
-        .catch(error => {
-            console.error('Erro ao salvar transação:', error.message);
-        });
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.error || 'Erro ao salvar transação');
+            });
+        }
+        return response.json();
+    });
 }
 
 function getMonthlySummary() {

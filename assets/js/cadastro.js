@@ -1,203 +1,193 @@
-const valorInput = document.getElementById("valorInput");
-const limparBtn = document.getElementById("limparValor");
-const categoriaInput = document.getElementById("categoria");
-const listaCategorias = document.getElementById("lista-categorias");
-const form = document.getElementById('form-transacao');
-const tituloInput = document.getElementById('titulo');
 let tipoSelecionado = null;
+let timeoutNotificacao = null;
+
+const DOM = {
+    valorInput: document.getElementById("valorInput"),
+    limparBtn: document.getElementById("limparValor"),
+    categoriaInput: document.getElementById("categoria"),
+    listaCategorias: document.getElementById("lista-categorias"),
+    form: document.getElementById("form-transacao"),
+    tituloInput: document.getElementById("titulo"),
+    notificacao: document.getElementById("notificacao"),
+    modal: document.getElementById("modal"),
+};
 
 const categoriasDisponiveis = [
-    'Água',
-    'Alimentação',
-    'Aluguel',
-    'Assinaturas',
-    'Cartão de Crédito',
-    'Compras',
-    'Educação',
-    'Energia',
-    'Internet',
-    'Investimentos',
-    'Lazer',
-    'Receitas',
-    'Restaurante',
-    'Salário',
-    'Saúde',
-    'Serviços',
-    'Supermercado',
-    'Telefone',
-    'Transporte',
-    'Outros'
+    "Água", "Aluguel", "Alimentação", "Assinaturas", "Cartão de Crédito",
+    "Compras Online", "Cuidados Pessoais", "Cursos", "Doações", "Educação",
+    "Emergências", "Energia", "Farmácia", "Freelance", "Impostos",
+    "Investimentos", "Internet", "Lazer", "Manutenção", "Pet",
+    "Presentes", "Poupança", "Reserva de Emergência", "Reembolsos", "Rendimentos",
+    "Restaurante", "Roupas", "Salário", "Saúde", "Serviços Domésticos",
+    "Supermercado", "Telefone", "Transporte", "Viagem", "Outros"
 ];
 
-const categoriasNormalizadas = categoriasDisponiveis.map(cat => {
-    const normalizada = removerAcentos(cat.toLowerCase());
-    return { original: cat, normalizada };
-});
+const categoriasNormalizadas = categoriasDisponiveis.map(c => ({
+    original: c,
+    normalizada: removerAcentos(c.toLowerCase())
+}));
 
+// --- Utilitários ---
 function removerAcentos(texto) {
     return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-function ehCategoriaValida(categoriaDigitada) {
-    const categoriaNormalizada = removerAcentos(categoriaDigitada.toLowerCase());
-    return categoriasNormalizadas.some(cat => cat.normalizada === categoriaNormalizada);
+function mostrarNotificacao(mensagem, tipo = "error", duracao = 8000) {
+    clearTimeout(timeoutNotificacao);
+    DOM.notificacao.textContent = mensagem;
+    DOM.notificacao.className = `notificacao show ${tipo}`;
+    DOM.notificacao.classList.remove("hidden");
+
+    timeoutNotificacao = setTimeout(() => {
+        DOM.notificacao.classList.remove("show");
+        setTimeout(() => DOM.notificacao.classList.add("hidden"), 300);
+    }, duracao);
 }
 
-function filtrarCategorias(filtroDigitado) {
-    const filtroNormalizado = removerAcentos(filtroDigitado.toLowerCase());
-    return categoriasNormalizadas
-        .filter(cat => cat.normalizada.includes(filtroNormalizado))
-        .map(cat => cat.original);
+function ehCategoriaValida(categoria) {
+    const normalizada = removerAcentos(categoria.toLowerCase());
+    return categoriasNormalizadas.some(c => c.normalizada === normalizada);
 }
 
 function formatarParaMoeda(valor) {
     const numeros = valor.replace(/\D/g, "");
     if (!numeros) return "";
 
-    let floatValue = parseFloat(numeros) / 100;
+    const floatValue = parseFloat(numeros) / 100;
     if (floatValue > 99999999.99) {
-        alert("Valor máximo permitido: R$ 99.999.999,99");
+        mostrarNotificacao("Valor máximo permitido: R$ 99.999.999,99");
         return "";
     }
 
     return floatValue.toLocaleString("pt-BR", {
         style: "currency",
-        currency: "BRL",
+        currency: "BRL"
     });
 }
 
-// Atualiza o campo e move o cursor para o final
-valorInput.addEventListener("input", e => {
-    const input = e.target;
-    input.value = formatarParaMoeda(input.value);
-    limparBtn.style.display = input.value ? "block" : "none";
+function atualizarListaCategorias(filtro) {
+    const normalizado = removerAcentos(filtro.toLowerCase());
+    const resultados = categoriasNormalizadas
+        .filter(c => c.normalizada.includes(normalizado))
+        .map(c => c.original);
 
-    // Mantém o cursor no final
-    input.selectionStart = input.selectionEnd = input.value.length;
-});
-
-// Botão "x" para limpar
-limparBtn.addEventListener("click", () => {
-    valorInput.value = "";
-    limparBtn.style.display = "none";
-    valorInput.focus();
-});
-
-
-function atualizarLista(filtro) {
-    const filtradas = filtrarCategorias(filtro);
-
-    listaCategorias.innerHTML = filtradas.length
-        ? filtradas.map(cat => `<li>${cat}</li>`).join("")
+    DOM.listaCategorias.innerHTML = resultados.length
+        ? resultados.map(c => `<li>${c}</li>`).join("")
         : `<li style="color: #999; pointer-events: none;">Nenhuma categoria encontrada</li>`;
 
-    listaCategorias.classList.remove("hidden");
+    DOM.listaCategorias.classList.remove("hidden");
 }
 
-// Atualiza enquanto digita
-categoriaInput.addEventListener("input", e => {
-    const valor = e.target.value.trim();
-    atualizarLista(valor); // sempre atualiza, mesmo se estiver vazio
-});
+function resetFormulario() {
+    DOM.tituloInput.value = "";
+    DOM.valorInput.value = "";
+    DOM.categoriaInput.value = "";
+    tipoSelecionado = null;
+    DOM.limparBtn.style.display = "none";
+    document.querySelectorAll(".tipo-btn").forEach(b =>
+        b.classList.remove("active-entrada", "active-saida")
+    );
+}
 
+// --- Manipuladores de eventos ---
 
+function handleValorInput(e) {
+    const input = e.target;
+    input.value = formatarParaMoeda(input.value);
+    DOM.limparBtn.style.display = input.value ? "block" : "none";
+    input.selectionStart = input.selectionEnd = input.value.length;
+}
 
-categoriaInput.addEventListener("focus", () => {
-    atualizarLista(categoriaInput.value);
-});
+function limparValor() {
+    DOM.valorInput.value = "";
+    DOM.limparBtn.style.display = "none";
+    DOM.valorInput.focus();
+}
 
+function handleCategoriaInput(e) {
+    atualizarListaCategorias(e.target.value.trim());
+}
 
-// Clica para escolher
-listaCategorias.addEventListener("click", (e) => {
-    if (e.target.tagName === "LI" && e.target.textContent !== "Nenhuma categoria encontrada") {
-        categoriaInput.value = e.target.textContent;
-        listaCategorias.classList.add("hidden");
+function handleCategoriaClick(e) {
+    if (e.target.tagName === "LI" && !e.target.textContent.includes("Nenhuma")) {
+        DOM.categoriaInput.value = e.target.textContent;
+        DOM.listaCategorias.classList.add("hidden");
     }
-});
+}
 
-// Fecha lista se clicar fora
-document.addEventListener("click", (e) => {
-    if (!e.target.closest(".categoria-wrapper")) {
-        listaCategorias.classList.add("hidden");
-    }
-});
-
-
-// Captura o tipo da transação ao clicar nos botões
-document.querySelectorAll('.tipo-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        tipoSelecionado = btn.getAttribute('data-modal-tipo');
-
-        // Remove classes anteriores
-        document.querySelectorAll('.tipo-btn').forEach(b => {
-            b.classList.remove('active-entrada', 'active-saida');
-        });
-
-        // Adiciona a classe certa dependendo do tipo
-        if (tipoSelecionado === 'entrada') {
-            btn.classList.add('active-entrada');
-        } else if (tipoSelecionado === 'saida') {
-            btn.classList.add('active-saida');
-        }
-    });
-});
-
-// Captura o envio do formulário
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const titulo = tituloInput.value.trim();
-    const valorFormatado = valorInput.value.trim();
-    const categoria = categoriaInput.value.trim();
-
-    if (!titulo || !valorFormatado || !tipoSelecionado || !categoria) {
-        alert('Preenchaaa todos os campos.');
-        return;
-    }
-
-    // Converte valor para número (ex: "R$ 1.234,56" → 1234.56)
-    const valorNumerico = parseFloat(
-        valorFormatado.replace(/\s|R\$|\./g, '').replace(',', '.')
+function handleTipoClick(e) {
+    tipoSelecionado = e.target.getAttribute("data-modal-tipo");
+    document.querySelectorAll(".tipo-btn").forEach(b =>
+        b.classList.remove("active-entrada", "active-saida")
     );
 
-    if (isNaN(valorNumerico) || valorNumerico <= 0) {
-        alert('Digite um valor válido maior que zero.');
+    e.target.classList.add(tipoSelecionado === "entrada" ? "active-entrada" : "active-saida");
+}
+
+async function handleFormSubmit(e) {
+    e.preventDefault();
+
+    const titulo = DOM.tituloInput.value.trim();
+    const valorStr = DOM.valorInput.value.trim();
+    const categoria = DOM.categoriaInput.value.trim();
+
+    if (!titulo || !valorStr || !tipoSelecionado || !categoria) {
+        mostrarNotificacao("Preencha todos os campos!");
         return;
     }
 
-    // Verifica se a categoria é válida (sem acento e com comparação em lowercase)
+    const valor = parseFloat(valorStr.replace(/\s|R\$|\./g, "").replace(",", "."));
+    if (isNaN(valor) || valor <= 0) {
+        mostrarNotificacao("Digite um valor válido maior que zero!");
+        return;
+    }
+
     if (!ehCategoriaValida(categoria)) {
-        alert('Categoria inválida. Selecione uma das opções sugeridas.');
+        mostrarNotificacao("Categoria inválida! Selecione uma das opções sugeridas.");
         return;
     }
 
     const transacao = {
         titulo,
-        valor: valorNumerico,
+        valor,
         tipo: tipoSelecionado,
         categoria
     };
 
-    postTransactions(transacao);
+    try {
+        await postTransactions(transacao); 
 
-    // Limpar campos após salvar
-    tituloInput.value = '';
-    valorInput.value = '';
-    categoriaInput.value = '';
-    tipoSelecionado = null;
-    document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active-entrada', 'active-saida'));
-    limparBtn.style.display = "none";
+        resetFormulario();
+        mostrarNotificacao("Transação salva com sucesso!", "success");
+        DOM.modal.classList.add("hidden");
+        await atualizarDados(); 
+    } catch (erro) {
+        console.error("Erro ao salvar transação:", erro);
+        mostrarNotificacao("Erro ao salvar transação. Tente novamente.");
+    }
+}
 
-    alert('Transação salva com sucesso!');
+// --- Inicialização ---
+function init() {
+    DOM.valorInput.addEventListener("input", handleValorInput);
+    DOM.limparBtn.addEventListener("click", limparValor);
+    DOM.categoriaInput.addEventListener("input", handleCategoriaInput);
+    DOM.categoriaInput.addEventListener("focus", () =>
+        atualizarListaCategorias(DOM.categoriaInput.value)
+    );
+    DOM.listaCategorias.addEventListener("click", handleCategoriaClick);
 
-    // Fecha o modal após cadastrar
-    const modal = document.getElementById("modal");
-    modal.classList.add("hidden");
+    document.querySelectorAll(".tipo-btn").forEach(btn =>
+        btn.addEventListener("click", handleTipoClick)
+    );
 
-    // Atualiza a tela
-    atualizarDados();
-});
+    DOM.form.addEventListener("submit", handleFormSubmit);
 
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".categoria-wrapper")) {
+            DOM.listaCategorias.classList.add("hidden");
+        }
+    });
+}
 
-
-
+document.addEventListener("DOMContentLoaded", init);

@@ -1,123 +1,24 @@
-function atualizarDados() {
-    getTransactions();
-    getMonthlySummary();
-}
+const UI = {
+    modal: document.getElementById("modal"),
+    btnTransacao: document.querySelector(".btn-transacao"),
+    closeModal: document.querySelector(".close"),
+    tipoBotoes: document.querySelectorAll("[data-modal-tipo]"),
+    cardsResumo: {
+        entrada: document.querySelector('[data-tipo="entrada"]'),
+        saida: document.querySelector('[data-tipo="saida"]'),
+        total: document.querySelector('[data-tipo="total"]')
+    },
+    tabela: document.getElementById("table-body")
+};
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    atualizarDados(); // busca inicial
-
-    // Atualiza a cada 10 segundos (10000 ms)
-    setInterval(() => {
-        atualizarDados();
-    }, 10000);
-
-    const btnTransacao = document.querySelector(".btn-transacao");
-    const modal = document.getElementById("modal");
-    const closeModal = document.querySelector(".close");
-
-    btnTransacao.addEventListener("click", function (e) {
-        e.preventDefault();
-        modal.classList.remove("hidden");
-    });
-
-    closeModal.addEventListener("click", function () {
-        modal.classList.add("hidden");
-    });
-
-    // fecha o modal se clicar fora
-    /* window.addEventListener("click", function (e) {
-        if (e.target === modal) {
-            modal.classList.add("hidden");
-        }
-    }); */
-
-    // destaque do botão selecionado (entrada ou saída)
-    const tipoBotoes = document.querySelectorAll("[data-modal-tipo]");
-    tipoBotoes.forEach(btn => {
-        btn.addEventListener("click", () => {
-            tipoBotoes.forEach(b => {
-                b.classList.remove("active-entrada", "active-saida");
-            });
-
-            const tipo = btn.getAttribute("data-modal-tipo");
-            btn.classList.add(`active-${tipo}`);
-        });
-    });
-});
-
-function exibirTransacoes(lista) {
-    const tbody = document.getElementById('table-body');
-    if (!tbody) return;
-
-    tbody.innerHTML = '';
-
-    const root = getComputedStyle(document.documentElement);
-
-    lista.forEach(transacao => {
-        const tr = document.createElement('tr');
-        tr.classList.add('table-row');
-        tr.setAttribute('data-tipo', transacao.tipo);  // adiciona tipo no tr
-
-        const tdTitulo = document.createElement('td');
-        tdTitulo.textContent = transacao.titulo;
-
-        const tdPreco = document.createElement('td');
-        tdPreco.textContent = Number(transacao.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-        // Aplica cor baseado no tipo
-        if (transacao.tipo === 'saida') {
-            tdPreco.style.color = root.getPropertyValue('--colorError').trim();
-        } else if (transacao.tipo === 'entrada') {
-            tdPreco.style.color = root.getPropertyValue('--colorSuccess').trim();
-        }
-
-        const tdCategoria = document.createElement('td');
-        tdCategoria.textContent = transacao.categoria;
-
-        const tdData = document.createElement('td');
-        const dataFormatada = new Date(transacao.data).toLocaleDateString('pt-BR');
-        tdData.textContent = dataFormatada;
-
-        tr.appendChild(tdTitulo);
-        tr.appendChild(tdPreco);
-        tr.appendChild(tdCategoria);
-        tr.appendChild(tdData);
-
-        tbody.appendChild(tr);
-    });
-}
-
-
-function exibirResumoMensal(data) {
-    const entradaCard = document.querySelector('[data-tipo="entrada"]');
-    const saidaCard = document.querySelector('[data-tipo="saida"]');
-    const totalCard = document.querySelector('[data-tipo="total"]');
-
-    entradaCard.querySelector('.valor-card').textContent = data.entrada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    entradaCard.querySelector('.ultima-transacao').textContent = data.ultima_entrada_data
-        ? `Última entrada dia ${formatCustomDate(data.ultima_entrada_data)}`
-        : 'Nenhuma entrada';
-
-    saidaCard.querySelector('.valor-card').textContent = `- ${data.saida.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
-    saidaCard.querySelector('.ultima-transacao').textContent = data.ultima_saida_data
-        ? `Última saída dia ${formatCustomDate(data.ultima_saida_data)}`
-        : 'Nenhuma saída';
-
-    totalCard.querySelector('.valor-card').textContent = data.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    totalCard.querySelector('.ultima-transacao').textContent = getCurrentMonthInterval();
-}
-
+// --- Funções Utilitárias ---
 function getMonthName(date) {
-    return date.toLocaleString('pt-BR', { month: 'long' }).replace(/^./, c => c.toUpperCase());
+    return date.toLocaleString("pt-BR", { month: "long" }).replace(/^./, c => c.toUpperCase());
 }
 
 function formatCustomDate(dateString) {
     const date = new Date(dateString);
-    const day = date.getDate();
-    const month = getMonthName(date);
-
-    return `${day} de ${month}`;
+    return `${date.getDate()} de ${getMonthName(date)}`;
 }
 
 function getCurrentMonthInterval() {
@@ -125,8 +26,92 @@ function getCurrentMonthInterval() {
     const month = getMonthName(now);
     const year = now.getFullYear();
     const lastDay = new Date(year, now.getMonth() + 1, 0).getDate();
-
     return `De 1 a ${lastDay} de ${month}`;
 }
 
+// --- Atualizações ---
+function atualizarDados() {
+    getTransactions();
+    getMonthlySummary();
+}
 
+function exibirTransacoes(lista) {
+    if (!UI.tabela) return;
+
+    UI.tabela.innerHTML = "";
+
+    const rootStyles = getComputedStyle(document.documentElement);
+
+    lista.forEach(({ titulo, valor, tipo, categoria, data }) => {
+        const tr = document.createElement("tr");
+        tr.classList.add("table-row");
+        tr.dataset.tipo = tipo;
+
+        const tdTitulo = criarTd(titulo);
+        const tdPreco = criarTd(formatarValorMonetario(valor), tipo === "saida"
+            ? rootStyles.getPropertyValue("--colorError").trim()
+            : tipo === "entrada"
+                ? rootStyles.getPropertyValue("--colorSuccess").trim()
+                : "");
+
+        const tdCategoria = criarTd(categoria);
+        const tdData = criarTd(new Date(data).toLocaleDateString("pt-BR"));
+
+        [tdTitulo, tdPreco, tdCategoria, tdData].forEach(td => tr.appendChild(td));
+        UI.tabela.appendChild(tr);
+    });
+}
+
+function exibirResumoMensal({ entrada, saida, total, ultima_entrada_data, ultima_saida_data }) {
+    UI.cardsResumo.entrada.querySelector(".valor-card").textContent = formatarValorMonetario(entrada);
+    UI.cardsResumo.entrada.querySelector(".ultima-transacao").textContent =
+        ultima_entrada_data ? `Última entrada dia ${formatCustomDate(ultima_entrada_data)}` : "Nenhuma entrada";
+
+    UI.cardsResumo.saida.querySelector(".valor-card").textContent = `- ${formatarValorMonetario(saida)}`;
+    UI.cardsResumo.saida.querySelector(".ultima-transacao").textContent =
+        ultima_saida_data ? `Última saída dia ${formatCustomDate(ultima_saida_data)}` : "Nenhuma saída";
+
+    UI.cardsResumo.total.querySelector(".valor-card").textContent = formatarValorMonetario(total);
+    UI.cardsResumo.total.querySelector(".ultima-transacao").textContent = getCurrentMonthInterval();
+}
+
+function formatarValorMonetario(valor) {
+    return Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+
+function criarTd(texto, cor = "") {
+    const td = document.createElement("td");
+    td.textContent = texto;
+    if (cor) td.style.color = cor;
+    return td;
+}
+
+// --- Eventos ---
+function initEventos() {
+    UI.btnTransacao?.addEventListener("click", e => {
+        e.preventDefault();
+        UI.modal.classList.remove("hidden");
+    });
+
+    UI.closeModal?.addEventListener("click", () => {
+        UI.modal.classList.add("hidden");
+    });
+
+    UI.tipoBotoes.forEach(btn => {
+        btn.addEventListener("click", () => {
+            UI.tipoBotoes.forEach(b => b.classList.remove("active-entrada", "active-saida"));
+            const tipo = btn.dataset.modalTipo;
+            btn.classList.add(`active-${tipo}`);
+        });
+    });
+}
+
+// --- Inicialização ---
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarDados();
+    setInterval(atualizarDados, 10000);
+    initEventos();
+});
