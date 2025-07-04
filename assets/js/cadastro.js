@@ -27,7 +27,7 @@ const categoriasNormalizadas = categoriasDisponiveis.map(c => ({
     normalizada: removerAcentos(c.toLowerCase())
 }));
 
-// --- Utilitários ---
+// --- UTILITÁRIOS ---
 function removerAcentos(texto) {
     return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -89,7 +89,7 @@ function resetFormulario() {
     );
 }
 
-// --- Manipuladores de eventos ---
+// --- MANIPULADORES DE EVENTOS ---
 
 function handleValorInput(e) {
     const input = e.target;
@@ -167,7 +167,7 @@ async function handleFormSubmit(e) {
     }
 }
 
-// --- Inicialização ---
+// --- INICIALIZAÇÃO ---
 function init() {
     DOM.valorInput.addEventListener("input", handleValorInput);
     DOM.limparBtn.addEventListener("click", limparValor);

@@ -11,7 +11,7 @@ const UI = {
     tabela: document.getElementById("table-body")
 };
 
-// --- Funções Utilitárias ---
+/* --- FUNÇÕES UTILITÁRIAS --- */
 function getMonthName(date) {
     return date.toLocaleString("pt-BR", { month: "long" }).replace(/^./, c => c.toUpperCase());
 }
@@ -29,7 +29,7 @@ function getCurrentMonthInterval() {
     return `De 1 a ${lastDay} de ${month}`;
 }
 
-// --- Atualizações ---
+/* --- ATUALIZAÇÕES --- */
 function atualizarDados() {
     getTransactions();
     getMonthlySummary();
@@ -89,7 +89,7 @@ function criarTd(texto, cor = "") {
     return td;
 }
 
-// --- Eventos ---
+/* --- EVENTOS --- */
 function initEventos() {
     UI.btnTransacao?.addEventListener("click", e => {
         e.preventDefault();
@@ -109,7 +109,7 @@ function initEventos() {
     });
 }
 
-// --- Inicialização ---
+/* --- INICIALIZAÇÃO --- */
 document.addEventListener("DOMContentLoaded", () => {
     atualizarDados();
     setInterval(atualizarDados, 10000);

@@ -7,7 +7,6 @@
 
 body {
     background-color: var(--colorBackground);
-
 }
 
 /* --- HEADER COM INFORMAÇÕES DO USUÁRIO --- */
@@ -139,8 +138,6 @@ header {
     border-top-left-radius: var(--radiusMedium);
     border-top-right-radius: var(--radiusMedium);
 }
-
-
 
 #table-head th {
     padding: var(--spacingMedium);

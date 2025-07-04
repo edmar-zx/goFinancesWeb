@@ -1,5 +1,5 @@
 :root {
-    /* Colors */
+    /* --- COLORS --- */
     --colorPrimary: #5F2EEA;
     --colorSecondary: #FF872C;
 
@@ -15,23 +15,22 @@
     --colorTextLight: #888888;
     --colorShape: #FFFFFF;
 
-    /* Font sizes*/
+    /* --- FONT-SIZES --- */
     --fontSizeSmall: 14px;
     --fontSizeMedium: 18px;
     --fontSizeLarge: 22px;
     --fontSize-xlarge: 26px;
     --fontSize-xxlarge: 30px;
 
-    /* Spacing */
+    /* --- SPACING --- */
     --spacingSmall: 8px;
     --spacingMedium: 16px;
     --spacingLarge: 24px;
     --spacing-xlarge: 32px;
 
-    /* Border Radius */
+    /* --- BORDER-RADIUS --- */
     --radiusSmall: 4px;
     --radiusMedium: 8px;
     --radiusLarge: 16px;
     --radius-xlarge: 32px;
 }
-

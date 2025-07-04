@@ -6,6 +6,7 @@ function getCurrentYearMonth() {
     };
 }
 
+/* --- CONEXÕES COM A API --- */
 function getTransactions() {
     const { year, month } = getCurrentYearMonth();
 
@@ -46,5 +47,3 @@ function getMonthlySummary() {
             console.error('Erro ao buscar resumo mensal:', error);
         });
 }
-
-
