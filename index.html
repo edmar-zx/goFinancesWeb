@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="assets/style/global.css">
     <link rel="stylesheet" href="assets/style/tela-inicial.css">
     <link rel="stylesheet" href="assets/style/cadastro.css">
+    <link rel="stylesheet" href="/assets/style/resume.css">
 </head>
 
 
@@ -56,62 +58,101 @@
             <a class="btn-transacao" href="">Nova Transação</a>
         </div>
     </header>
-    
+
     <main>
-        <section id="transacao">
-            <div class="card" data-tipo="entrada">
-                <div class="parte-superior">
-                    <p class="card-titulo">Entradas</p>
-                    <i class="fa-solid fa-circle-up icon-arrow-up"></i>
+        <section id="home">
+            <div id="transacao">
+                <div class="card" data-tipo="entrada">
+                    <div class="parte-superior">
+                        <p class="card-titulo">Entradas</p>
+                        <i class="fa-solid fa-circle-up icon-arrow-up"></i>
+                    </div>
+                    <div class="parte-inferior">
+                        <p class="valor-card"></p>
+                        <p class="ultima-transacao"></p>
+                    </div>
                 </div>
-                <div class="parte-inferior">
-                    <p class="valor-card"></p>
-                    <p class="ultima-transacao"></p>
+
+                <div class="card" data-tipo="saida">
+                    <div class="parte-superior">
+                        <p class="card-titulo">Saídas</p>
+                        <i class="fa-solid fa-circle-down icon-arrow-down"></i>
+                    </div>
+                    <div class="parte-inferior">
+                        <p class="valor-card"></p>
+                        <p class="ultima-transacao"></p>
+                    </div>
+                </div>
+
+                <div class="card card-total" data-tipo="total">
+                    <div class="parte-superior">
+                        <p class="card-titulo">Total</p>
+                        <i class="fa-solid fa-dollar-sign icon-dollar"></i>
+                    </div>
+                    <div class="parte-inferior">
+                        <p class="valor-card"></p>
+                        <p class="ultima-transacao"></p>
+                    </div>
                 </div>
             </div>
+            <div class="table-wrapper">
+                <table id="table-head">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Preço</th>
+                            <th>Categoria</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                </table>
 
-            <div class="card" data-tipo="saida">
-                <div class="parte-superior">
-                    <p class="card-titulo">Saídas</p>
-                    <i class="fa-solid fa-circle-down icon-arrow-down"></i>
-                </div>
-                <div class="parte-inferior">
-                    <p class="valor-card"></p>
-                    <p class="ultima-transacao"></p>
-                </div>
-            </div>
+                <div class="tbody-container">
+                    <table id="table-body">
+                        <tbody>
 
-            <div class="card card-total" data-tipo="total">
-                <div class="parte-superior">
-                    <p class="card-titulo">Total</p>
-                    <i class="fa-solid fa-dollar-sign icon-dollar"></i>
-                </div>
-                <div class="parte-inferior">
-                    <p class="valor-card"></p>
-                    <p class="ultima-transacao"></p>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
 
-        <div class="table-wrapper">
-            <table id="table-head">
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Preço</th>
-                        <th>Categoria</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-            </table>
+        <section id="resume">
+            <div class="meses">
+                <div class="header-meses">
+                    <p class="grafico-titulos">Mêses</p>
+                    <div class="legenda-tipo">
+                        <div class="item-legenda-tipo">
+                            <span class="box-tipo entrada"></span>
+                            <span>Entradas</span>
+                        </div>
+                        <div class="item-legenda-tipo">
+                            <span class="box-tipo saida"></span>
+                            <span>Saídas</span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="tbody-container">
-                <table id="table-body">
+                <div class="meses-scroll">
+                    <canvas id="graficoMeses"></canvas>
+                </div>
             </div>
-        </div>
+            <div class="grafico-legendas">
+                <div class="grafico-container">
+                    <canvas id="graficoPizza" width="450" height="450"></canvas>
+                </div>
+                <div class="categorias">
+                    <p class="grafico-titulos">Categorias</p>
+                    <div id="legenda" class="legenda"></div>
+                </div>
+
+            </div>
+        </section>
     </main>
 </body>
+
 </html>
 <script src="assets/js/api.js"></script>
 <script src="assets/js/tela-inicial.js"></script>
 <script src="assets/js/cadastro.js"></script>
+<script src="/assets/js/resume.js"></script>

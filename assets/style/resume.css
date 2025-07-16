@@ -1,0 +1,160 @@
+/* 
+
+
+LINK PARA BASEAR NO RESUMO: https://dribbble.com/shots/18895539-Modern-Admin-Dashboard-UI-Design-for-Flup-Furniture-App-Website
+
+
+
+*/
+
+
+.meses {
+    height: auto;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 40px;
+}
+
+#graficoPizza {
+    width: 80%;
+    height: auto;
+    max-width: 450px;
+}
+
+.grafico-legendas {
+    margin: 40px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.grafico-container {
+    border-radius: 10px;
+    background: #ffffff;
+    width: 49%;
+    display: flex;
+    justify-content: center;
+}
+
+.categorias {
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+
+    border-radius: 10px;
+    background: #ffffff;
+    justify-content: center;
+    text-align: center;
+}
+
+.item-legenda {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    background: var(--colorBackground, #fff);
+    border-radius: 10px;
+    margin: 20px;
+    overflow: hidden;
+    /* importante para o border-radius funcionar com o color box grudado */
+    position: relative;
+    padding: 16px 16px 16px 40px;
+    /* espaço à esquerda para o texto */
+}
+
+.valor-legenda {
+    font-weight: bold;
+}
+
+
+.legenda {
+    max-height: 300px;
+    /* altura máxima visível */
+    overflow-y: auto;
+    /* ativa o scroll vertical */
+    padding-right: 8px;
+
+}
+
+.cor-box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #4caf50;
+}
+
+.grafico-titulos {
+    font-size: var(--fontSizeLarge)
+}
+
+.meses {
+    background: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 40px;
+
+}
+
+.meses-scroll {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    /* ativa scroll horizontal */
+    padding-bottom: 8px;
+    /* espaço para não “colar” o gráfico na barra */
+    margin: 0px 80px;
+    
+}
+
+/* opcional: tamanho máximo visível antes do scroll */
+.meses-scroll {
+    max-width: 100%;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+/* canvas vai ficar tão largo quanto necessário */
+.header-meses {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.grafico-titulos {
+  margin: 0;
+  font-size: var(--fontSize-xlarge);
+}
+
+/* legenda centralizada */
+.legenda-tipo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.item-legenda-tipo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.box-tipo {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.box-tipo.entrada { background-color: #4e4cafff; }
+.box-tipo.saida   { background-color: #f89500ff; }
